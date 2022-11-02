@@ -21,7 +21,7 @@ def predict():
 def result():
 	## TODO predict using model in predict(), display result
 	
-	return render_template('predict.html',prediction='test')
+	return render_template('results.html',prediction='test')
 
 
 
