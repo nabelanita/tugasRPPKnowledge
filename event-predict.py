@@ -1,11 +1,18 @@
 from flask import Flask
-from home.views import home_view
+from flask import render_template
 
-def create_app():
-	app = Flask(__name__)  # Create application object
-	app.register_blueprint(home_view)  # Register url's so application knows what to do
-	return app
+import math
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+app = Flask(__name__)  # Create application object
+
+@app.route('/')
+def index():
+	return render_template('index.html')
+
 
 if __name__ == '__main__':
-	app = create_app()  # Create application with our config file
-	app.run()  # Run our application
+	app.run(debug=True)  # Run our application
