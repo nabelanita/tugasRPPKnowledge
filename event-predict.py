@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import render_template
+from flask import render_template, request, redirect
 
 import math
 import pandas as pd
@@ -27,7 +27,7 @@ def predict():
 	out = model.predict(enter.reshape((1, n_input)), verbose=0)
 	pred_arr.append(math.floor(out))
 
-	for i in range (23):  
+	for i in range (59):  
 		enter = np.delete(enter, [0])
 		enter = np.append(enter, values=out)
 
@@ -49,7 +49,26 @@ def result():
 
 	return render_template('results.html',prediction=result)
 
+@app.route('/predict/<id>')
+def prediction(id):
+	result = predict()
+	idx = int(id)
+	prediction = result[idx]
+	month_id = idx % 12
+	year = idx // 12 + 2020
 
+	month = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
 
+	return render_template('prediction.html',month=month[month_id],year=year,prediction=prediction)
+
+@app.route('/handle_data', methods=['POST'])
+def handle_data():
+	month = request.form['month']
+	year = request.form['year']
+
+	idx = (int(month) - 1) + (int(year) - 2020) * 12
+
+	return redirect('/predict/'+str(idx))
+	
 if __name__ == '__main__':
 	app.run(debug=True)  # Run our application
