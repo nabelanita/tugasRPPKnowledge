@@ -39,15 +39,6 @@ def predict():
 
 	return pred_arr
 	
-	
-
-@app.route('/predict')
-def result():
-	## TODO predict using model in predict(), display result
-	result = predict()
-	print(result)
-
-	return render_template('results.html',prediction=result)
 
 @app.route('/predict/<id>')
 def prediction(id):
