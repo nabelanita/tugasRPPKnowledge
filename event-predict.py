@@ -11,14 +11,15 @@ from keras.models import load_model
 
 app = Flask(__name__)  # Create application object
 
+df = pd.read_csv('dataeventfix.csv')
+
 @app.route('/')
 def index():
-	return render_template('index.html')
+	return render_template('index.html', tables=[df.to_html(index=False)], titles=[''])
 
 def predict():
   ##TODO: import model, return model
 	n_input = 6
-	df = pd.read_csv('dataeventfix.csv')
 	length = df['jumlah'].shape[0]
 	model = load_model('regressor_model.h5')
 	pred_arr = []
@@ -37,7 +38,6 @@ def predict():
 		pred_arr.append(math.floor(out))
 
 	return pred_arr
-
 	
 	
 

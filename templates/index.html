@@ -1,4 +1,49 @@
 <html>
+	<head>
+		<style>
+			body {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+			.table_container {
+				height: 20em;
+			}
+			table {
+				display: flex;
+				flex-flow: column;
+				height: 100%;
+				width: 600px;
+			}
+			table thead {
+				/* head takes the height it requires, 
+				and it's not scaled when table is resized */
+				flex: 0 0 auto;
+				width: calc(100% - 1em);
+			}
+			table thead tr {
+				text-align: center !important;
+			}
+			table tbody {
+				/* body takes all the remaining available space */
+				flex: 1 1 auto;
+				display: block;
+				overflow-y: scroll;
+			}
+			table tbody tr {
+				width: 100%;
+				text-align: center !important;
+			}
+			table thead, table tbody tr {
+				display: table;
+				table-layout: fixed;
+			}
+			h1 {
+				text-align: center;
+			}
+		</style>
+	</head>
 <body>
 	<h1>Tugas RPP</h1>
 	<form action="{{ url_for('handle_data') }}" method="post">
@@ -27,6 +72,12 @@
 		</select><br><br>
 		<input type="submit" value="Submit">
 	  </form>
+	  <h3>Data Event DKI Jakarta 2015-2019</h3>
+	  <div class="table_container">
+		{% for table in tables %}
+		<h2>{{titles[loop.index]}}</h2>                            
+		{{ table|safe }}
+		{% endfor %} 
+	</div>
 </body>
-<script type='text/javascript' src="{{url_for('static', filename='js/script.js')}}"></script>
 </html>
