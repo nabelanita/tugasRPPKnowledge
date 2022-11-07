@@ -24,7 +24,7 @@ def predict():
 	model = load_model('regressor_model.h5')
 	pred_arr = []
 
-	enter = np.array(df['jumlah'])[length-n_input:length]
+	enter = np.array(df['jumlah'].astype(float))[length-n_input:length]
 	out = model.predict(enter.reshape((1, n_input)), verbose=0)
 	pred_arr.append(math.floor(out))
 
